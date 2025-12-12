@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this verification or build upon the cycle length discovery, please cite it as below."
+type: software
+title: "Independent Verification of Engineering Emergence"
+version: 1.0.0
+date-released: 2025-12-12
+authors:
+  - family-names: Onasenko
+    given-names: Oleksii
+    email: olexxa62@gmail.com
+    affiliation: Independent Researcher
+repository-code: "https://github.com/olexxa62-code/engineering-emergence-verification"
+url: "https://github.com/olexxa62-code/engineering-emergence-verification"
+abstract: >-
+  Independent computational verification of "Engineering Emergence" 
+  (Jansma & Hoel, 2025) with original discovery of critical cycle 
+  length effect in emergent hierarchies. Systems with cycle length 3 
+  exhibit complex hierarchies, while cycle length 4+ exhibit balloon 
+  hierarchies, revealing a fundamental topological constraint on emergence.
+keywords:
+  - causal emergence
+  - complex systems
+  - emergent hierarchies
+  - computational verification
+  - cycle length effect
+  - topological constraints
+license: Apache-2.0
+references:
+  - type: article
+    authors:
+      - family-names: Jansma
+        given-names: Abel
+      - family-names: Hoel
+        given-names: Erik
+    title: "Engineering Emergence"
+    year: 2025
+    journal: "arXiv preprint"
+    url: "https://arxiv.org/abs/2510.02649"
+    doi: "10.48550/arXiv.2510.02649"

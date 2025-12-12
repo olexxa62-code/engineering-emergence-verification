@@ -1,0 +1,15 @@
+# Engineering Emergence Verification
+# Python 3.10+
+
+# Core numerical computing
+numpy>=2.2.0
+
+# Visualization
+matplotlib>=3.10.0
+
+# Standard library (no installation needed)
+# - itertools
+# - pickle
+# - csv
+# - time
+# - collections
