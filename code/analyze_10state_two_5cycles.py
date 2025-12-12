@@ -11,6 +11,7 @@ Developer: SubstanceNet
 (brute force НЕ підходить для n≥10)
 """
 import sys
+import pickle
 import numpy as np
 from pathlib import Path
 
@@ -33,12 +34,16 @@ def main():
     # Microscale
     print("\nMICROSCALE:")
     cp_micro = calculate_cp(tpm)
+    det_micro = calculate_determinism(tpm)
+    deg_micro = calculate_degeneracy(tpm)
     print(f"  CP(micro) = {cp_micro:.4f}")
     
     # Optimal macroscale
     optimal = get_optimal_partition()
     tpm_macro = coarse_grain_tpm(tpm, optimal)
     cp_macro = calculate_cp(tpm_macro)
+    det_macro = calculate_determinism(tpm_macro)
+    deg_macro = calculate_degeneracy(tpm_macro)
     delta_cp = cp_macro - cp_micro
     
     print("\nOPTIMAL MACROSCALE:")
@@ -46,7 +51,7 @@ def main():
     print(f"  CP(macro) = {cp_macro:.4f}")
     print(f"  ΔCP       = {delta_cp:.4f}")
     
-    # Greedy algorithm (швидко!)
+    # Greedy algorithm
     print("\n" + "-"*70)
     print("Запускаю Branching Greedy Algorithm (n_paths=100)...")
     print("-"*70)
@@ -67,13 +72,40 @@ def main():
     
     # Показуємо emergent scales
     print("EMERGENT SCALES:")
-    for i, part in enumerate(emergent[:5], 1):  # top 5
+    for i, part in enumerate(emergent[:5], 1):
         cp = results['cp_dict'][part]
         dcp = results['delta_cp_dict'][part]
         print(f"  {i}. dim={len(part)}, CP={cp:.4f}, ΔCP={dcp:.4f}")
     
     if len(emergent) > 5:
         print(f"  ... та ще {len(emergent)-5} scales")
+    
+    # Збираємо дані для збереження
+    output_data = {
+        'n_states': 10,
+        'cycle_length': 5,
+        'p_self': p_self,
+        'cp_micro': cp_micro,
+        'det_micro': det_micro,
+        'deg_micro': deg_micro,
+        'cp_optimal': cp_macro,
+        'det_optimal': det_macro,
+        'deg_optimal': deg_macro,
+        'delta_cp': delta_cp,
+        'optimal_partition': optimal,
+        'n_emergent_raw': len(results['emergent']),
+        'n_emergent': len(emergent),
+        'emergent_partitions': emergent,
+        'hierarchy_type': 'Balloon' if len(emergent) == 1 else 'Complex',
+        'n_partitions_sampled': len(results['cp_dict'])
+    }
+    
+    # Зберігаємо результати
+    output_file = Path("results/results_10state_two_5cycles.pkl")
+    with open(output_file, 'wb') as f:
+        pickle.dump(output_data, f)
+    
+    print(f"\n✓ Збережено: {output_file}")
     
     print("\n" + "="*70)
     print("ПОРІВНЯННЯ:")
@@ -82,7 +114,7 @@ def main():
     print("-"*70)
     print("6-state (3-cycles)  |   3    |    3     | Complex")
     print("8-state (4-cycles)  |   4    |    1     | Balloon")
-    print(f"10-state (5-cycles) |   5    |    {len(emergent)}     | {'Balloon' if len(emergent)==1 else 'Complex'}")
+    print(f"10-state (5-cycles) |   5    |    {len(emergent)}     | {output_data['hierarchy_type']}")
     print("="*70 + "\n")
 
 if __name__ == "__main__":

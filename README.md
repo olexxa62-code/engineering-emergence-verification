@@ -78,6 +78,9 @@ hoel_verification_report/
 ├── results/                        # Computational outputs
 │   ├── results_6state_two_3cycles.pkl
 │   ├── results_8state_two_4cycles.pkl
+│   ├── results_10state_two_5cycles.pkl
+│   ├── sensitivity_analysis_6state_corrected.pkl
+│   ├── sensitivity_analysis_8state.pkl    
 │   └── comparative_analysis.csv
 ├── figures/                        # Visualizations
 │   ├── figure_comparative_analysis.png
