@@ -72,9 +72,9 @@ hoel_verification_report/
 │   ├── create_final_figures.py
 │   └── ce2_core.py
 ├── data/                           # System definitions
-│   ├── six_state_system.py
-│   ├── eight_state_system.py
-│   └── ten_state_system.py
+│   ├── six_state_two_cycle.py
+│   ├── eight_state_two_four_cycles.py
+│   └── ten_state_two_five_cycles.py
 ├── results/                        # Computational outputs
 │   ├── results_6state_two_3cycles.pkl
 │   ├── results_8state_two_4cycles.pkl
