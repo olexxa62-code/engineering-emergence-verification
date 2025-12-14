@@ -131,4 +131,3 @@ def run_algorithm1(T: np.ndarray, epsilon: float = 1e-10) -> Dict:
         'n': n
     }
 
-print("Algorithm 1 module loaded")

@@ -41,7 +41,6 @@ def generate_all_partitions(n: int) -> List[Tuple[Tuple[int, ...], ...]]:
     unique_partitions = set(partition_helper(items))
     return sorted(list(unique_partitions))
 
-print("CE 2.0 Core module loaded successfully")
 
 def coarse_grain_tpm(T: np.ndarray, partition: Tuple[Tuple[int, ...], ...]) -> np.ndarray:
     """
@@ -130,4 +129,3 @@ def calculate_cp(T: np.ndarray) -> float:
     
     return cp
 
-print("Coarse-graining and CP functions added")

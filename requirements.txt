@@ -1,15 +1,18 @@
 # Engineering Emergence Verification
-# Python 3.10+
+# Python 3.8+
 
 # Core numerical computing
-numpy>=2.2.0
+numpy>=1.21.0
 
 # Visualization
-matplotlib>=3.10.0
+matplotlib>=3.5.0
+
+# Graph analysis
+networkx>=2.6.0
 
 # Standard library (no installation needed)
 # - itertools
 # - pickle
 # - csv
-# - time
-# - collections
+# - typing
+# - pathlib
