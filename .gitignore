@@ -35,3 +35,4 @@ archive/hoel_verification_backup_*.tar.gz
 *.tmp
 *.temp
 .cache/
+archive/
