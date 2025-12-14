@@ -12,6 +12,7 @@ authors:
     affiliation: Independent Researcher
 repository-code: "https://github.com/olexxa62-code/engineering-emergence-verification"
 url: "https://github.com/olexxa62-code/engineering-emergence-verification"
+doi: "10.5281/zenodo.17931230"
 abstract: >-
   Independent computational verification of "Engineering Emergence" 
   (Jansma & Hoel, 2025) with original discovery of critical cycle 
