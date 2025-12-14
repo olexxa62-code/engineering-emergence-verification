@@ -1,5 +1,7 @@
 # Independent Verification of Engineering Emergence
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
 **Verification of "Engineering Emergence" (Jansma & Hoel, 2025)**
 
 **Author:** Oleksii Onasenko  
