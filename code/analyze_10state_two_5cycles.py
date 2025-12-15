@@ -7,8 +7,8 @@ Developer: SubstanceNet
 
 #!/usr/bin/env python3
 """
-Аналіз 10-state системи через BRANCHING GREEDY
-(brute force НЕ підходить для n≥10)
+10-state system analysis via BRANCHING GREEDY
+(brute force NOT suitable for n>=10)
 """
 import sys
 import pickle
@@ -24,11 +24,11 @@ from ten_state_two_five_cycles import create_two_five_cycle_tpm, get_optimal_par
 
 def main():
     print("\n" + "="*70)
-    print("АНАЛІЗ: 10-state Two 5-Cycles (BRANCHING GREEDY)")
+    print("ANALYSIS: 10-state Two 5-Cycles (BRANCHING GREEDY)")
     print("="*70)
     
     p_self = 0.20
-    print(f"\nПараметри: p_self = {p_self}")
+    print(f"\nParameters: p_self = {p_self}")
     tpm = create_two_five_cycle_tpm(p_self=p_self)
     
     # Microscale
@@ -53,24 +53,24 @@ def main():
     
     # Greedy algorithm
     print("\n" + "-"*70)
-    print("Запускаю Branching Greedy Algorithm (n_paths=100)...")
+    print("Running Branching Greedy Algorithm (n_paths=100)...")
     print("-"*70)
     
     results = run_greedy_algorithm(tpm, n_paths=100)
     
-    # Виключаємо microscale
+    # Exclude microscale
     microscale = tuple((i,) for i in range(10))
     emergent = [p for p in results['emergent'] if p != microscale]
     
     print("\n" + "="*70)
-    print("РЕЗУЛЬТАТИ:")
+    print("RESULTS:")
     print("="*70)
     print(f"Partitions sampled:      {len(results['cp_dict'])}")
-    print(f"Emergent scales (RAW):   {len(results['emergent'])}")
-    print(f"Emergent scales (CORR):  {len(emergent)}")
+    print(f"Emergent more scales (RAW):   {len(results['emergent'])}")
+    print(f"Emergent more scales (CORR):  {len(emergent)}")
     print()
     
-    # Показуємо emergent scales
+    # Show emergent more scales
     print("EMERGENT SCALES:")
     for i, part in enumerate(emergent[:5], 1):
         cp = results['cp_dict'][part]
@@ -78,9 +78,9 @@ def main():
         print(f"  {i}. dim={len(part)}, CP={cp:.4f}, ΔCP={dcp:.4f}")
     
     if len(emergent) > 5:
-        print(f"  ... та ще {len(emergent)-5} scales")
+        print(f"  ... and {len(emergent)-5} more scales")
     
-    # Збираємо дані для збереження
+    # Collect data for saving
     output_data = {
         'n_states': 10,
         'cycle_length': 5,
@@ -100,15 +100,15 @@ def main():
         'n_partitions_sampled': len(results['cp_dict'])
     }
     
-    # Зберігаємо результати
+    # Save results
     output_file = Path("results/results_10state_two_5cycles.pkl")
     with open(output_file, 'wb') as f:
         pickle.dump(output_data, f)
     
-    print(f"\n✓ Збережено: {output_file}")
+    print(f"\n✓ Saved: {output_file}")
     
     print("\n" + "="*70)
-    print("ПОРІВНЯННЯ:")
+    print("COMPARISON:")
     print("-"*70)
     print("System              | Length | Emergent | Type")
     print("-"*70)

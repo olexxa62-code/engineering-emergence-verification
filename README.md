@@ -68,16 +68,16 @@ This discovery extends the paper's findings and provides new insights into desig
 hoel_verification_report/
 ├── code/
 │   ├── __init__.py
-│   ├── ce2_core.py                    # Ядро: CP, Determinism, Degeneracy
-│   ├── algorithm1_brute_force.py      # Алгоритм 1: повний перебір
-│   ├── algorithm2_greedy.py           # Алгоритм 2: greedy
-│   ├── analyze_6state_two_3cycles.py  # Аналіз 6-state
-│   ├── analyze_8state_two_4cycles.py  # Аналіз 8-state
-│   ├── analyze_10state_two_5cycles.py # Аналіз 10-state
-│   ├── comparative_cycle_analysis.py  # Порівняльний аналіз
-│   ├── create_final_figures.py        # Генерація фігур
-│   ├── verify_cp_values.py            # Верифікація CP
-│   └── visualize_hierarchy.py         # Візуалізація ієрархій
+│   ├── ce2_core.py                    # Core: CP, Determinism, Degeneracy
+│   ├── algorithm1_brute_force.py      # Algorithm 1: brute force
+│   ├── algorithm2_greedy.py           # Algorithm 2: greedy
+│   ├── analyze_6state_two_3cycles.py  # 6-state analysis
+│   ├── analyze_8state_two_4cycles.py  # 8-state analysis
+│   ├── analyze_10state_two_5cycles.py # 10-state analysis
+│   ├── comparative_cycle_analysis.py  # Comparative analysis
+│   ├── create_final_figures.py        # Figure generation
+│   ├── verify_cp_values.py            # CP verification
+│   └── visualize_hierarchy.py         # Hierarchy visualization
 ├── data/                           # System definitions
 │   ├── six_state_two_cycle.py
 │   ├── eight_state_two_four_cycles.py

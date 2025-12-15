@@ -7,7 +7,7 @@ Developer: SubstanceNet
 
 #!/usr/bin/env python3
 """
-ВИПРАВЛЕНИЙ Algorithm 2 & 3: Branching Greedy
+Algorithm 2 & 3: Branching Greedy (corrected)
 """
 import numpy as np
 from itertools import combinations
@@ -50,7 +50,7 @@ def greedy_completion(tpm, start_partition):
     return path, cp_list
 
 def run_greedy_algorithm(tpm, n_paths=100, verbose=True):
-    """Algorithm 3: Branching Greedy з паралельними шляхами"""
+    """Algorithm 3: Branching Greedy with parallel paths"""
     n = tpm.shape[0]
     
     if verbose:
@@ -110,14 +110,14 @@ def run_greedy_algorithm(tpm, n_paths=100, verbose=True):
     if verbose:
         print(f"Completed: {len(cp_dict)} unique partitions sampled")
     
-    # ВИПРАВЛЕНИЙ обчислення ΔCP
+    # Corrected ΔCP calculation
     delta_cp_dict = {}
     
     for partition in cp_dict.keys():
         max_ancestor_cp = 0.0
         
         for other in cp_dict.keys():
-            # ВИКЛЮЧАЄМО себе!
+            # Exclude self!
             if other == partition:
                 continue
                 
@@ -130,7 +130,7 @@ def run_greedy_algorithm(tpm, n_paths=100, verbose=True):
     emergent = [p for p in cp_dict.keys() if delta_cp_dict[p] > threshold]
     
     if verbose:
-        print(f"Found {len(emergent)} emergent scales (ΔCP > {threshold})")
+        print(f"Found {len(emergent)} emergent more scales (ΔCP > {threshold})")
     
     return {
         'cp_dict': cp_dict,
@@ -141,8 +141,8 @@ def run_greedy_algorithm(tpm, n_paths=100, verbose=True):
 
 def is_refinement(partition_a, partition_b):
     """
-    Перевіряє чи partition_b є refinement partition_a
-    (тобто partition_b більш дрібна, тобто ancestor)
+    Checks if partition_b is a refinement of partition_a
+    (i.e., partition_b is finer, i.e., ancestor)
     """
     for block_b in partition_b:
         found = False

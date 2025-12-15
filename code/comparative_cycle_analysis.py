@@ -8,7 +8,7 @@ Developer: SubstanceNet
 #!/usr/bin/env python3
 """
 CORRECTED Comparative Analysis: 6-state vs 8-state
-З правильним виключенням microscale
+With correct microscale exclusion
 """
 import sys
 import pickle
@@ -17,17 +17,17 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 def load_results(filepath):
-    """Завантажує pickle результати"""
+    """Loads pickle results"""
     with open(filepath, 'rb') as f:
         return pickle.load(f)
 
 def create_comparison_plots():
-    """Створює порівняльні графіки"""
-    # Завантажуємо дані
+    """Creates comparative plots"""
+    # Load data
     results_6 = load_results('results/sensitivity_analysis_6state_corrected.pkl')
     results_8 = load_results('results/sensitivity_analysis_8state.pkl')
     
-    # Екстракція даних
+    # Data extraction
     p_self_6 = [r['p_self'] for r in results_6]
     p_self_8 = [r['p_self'] for r in results_8]
     
@@ -43,7 +43,7 @@ def create_comparison_plots():
     emergent_6 = [r['n_emergent_corrected'] for r in results_6]
     emergent_8 = [r['n_emergent_corrected'] for r in results_8]
     
-    # Створюємо фігуру
+    # Create figure
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
     fig.suptitle('CORRECTED Comparative Analysis: 6-state vs 8-state Systems', 
                  fontsize=16, fontweight='bold', y=0.995)
@@ -73,7 +73,7 @@ def create_comparison_plots():
     ax.grid(True, alpha=0.3)
     ax.set_ylim([0, 4])
     
-    # Додаємо текстові мітки
+    # Add text labels
     ax.text(0.25, 3.2, 'Complex hierarchy\n(3 scales)', 
             fontsize=9, color='blue', ha='center')
     ax.text(0.25, 1.3, 'Balloon hierarchy\n(1 scale)', 
@@ -128,15 +128,15 @@ def create_comparison_plots():
     
     plt.tight_layout()
     
-    # Зберігаємо
+    # Save
     output_file = Path('figures/comparative_analysis_corrected.png')
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
-    print(f"Збережено: {output_file}")
+    print(f"Saved: {output_file}")
     
     plt.close()
 
 def print_summary_table():
-    """Друкує зведену таблицю"""
+    """Prints summary table"""
     results_6 = load_results('results/sensitivity_analysis_6state_corrected.pkl')
     results_8 = load_results('results/sensitivity_analysis_8state.pkl')
     
@@ -174,7 +174,7 @@ def print_summary_table():
     print("="*80 + "\n")
 
 def main():
-    print("\nСтворюю порівняльні візуалізації...")
+    print("\nCreating comparative visualizations...")
     create_comparison_plots()
     print_summary_table()
 

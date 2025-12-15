@@ -7,8 +7,8 @@ Developer: SubstanceNet
 
 #!/usr/bin/env python3
 """
-Фінальна візуалізація: Cycle Length Effect
-Порівняння 6-state, 8-state, 10-state систем
+Final visualization: Cycle Length Effect
+Comparison of 6-state, 8-state, 10-state systems
 """
 import sys
 import pickle
@@ -24,12 +24,12 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'data'))
 from ten_state_two_five_cycles import create_two_five_cycle_tpm, get_optimal_partition
 
 def load_results(filepath):
-    """Завантажує pickle результати"""
+    """Loads pickle results"""
     with open(filepath, 'rb') as f:
         return pickle.load(f)
 
 def get_10state_data():
-    """Отримує дані для 10-state (baseline p_self=0.2)"""
+    """Gets data for 10-state (baseline p_self=0.2)"""
     tpm = create_two_five_cycle_tpm(p_self=0.2)
     optimal = get_optimal_partition()
     
@@ -38,7 +38,7 @@ def get_10state_data():
     cp_macro = calculate_cp(tpm_macro)
     delta_cp = cp_macro - cp_micro
     
-    # Greedy для emergent scales
+    # Greedy for emergent scales
     results = run_greedy_algorithm(tpm, n_paths=100, verbose=False)
     microscale = tuple((i,) for i in range(10))
     emergent = [p for p in results['emergent'] if p != microscale]
@@ -51,20 +51,20 @@ def get_10state_data():
     }
 
 def create_final_visualization():
-    """Створює фінальну візуалізацію"""
-    print("\nЗавантажую дані...")
+    """Creates final visualization"""
+    print("\nLoading data...")
     
-    # Завантажуємо 6-state та 8-state (baseline p_self=0.2, index=4)
+    # Load 6-state and 8-state (baseline p_self=0.2, index=4)
     results_6 = load_results('results/sensitivity_analysis_6state_corrected.pkl')
     results_8 = load_results('results/sensitivity_analysis_8state.pkl')
     
     data_6 = results_6[4]  # p_self=0.2
     data_8 = results_8[4]
     
-    print("Обчислюю 10-state...")
+    print("Computing 10-state...")
     data_10 = get_10state_data()
     
-    # Дані для візуалізації
+    # Data for visualization
     cycle_lengths = [3, 4, 5]
     cp_micros = [data_6['cp_micro'], data_8['cp_micro'], data_10['cp_micro']]
     cp_macros = [data_6['cp_macro'], data_8['cp_macro'], data_10['cp_macro']]
@@ -73,9 +73,9 @@ def create_final_visualization():
                        data_8['n_emergent_corrected'], 
                        data_10['n_emergent']]
     
-    print("\nСтворюю візуалізацію...")
+    print("\nCreating visualization...")
     
-    # Створюємо фігуру
+    # Create figure
     fig = plt.figure(figsize=(16, 10))
     gs = fig.add_gridspec(2, 2, hspace=0.3, wspace=0.3)
     
@@ -109,16 +109,16 @@ def create_final_visualization():
     ax2.set_xticks(cycle_lengths)
     ax2.set_ylim([0.15, 0.30])
     
-    # Додаємо тренд
+    # Add trend
     z = np.polyfit(cycle_lengths, delta_cps, 1)
     p = np.poly1d(z)
     ax2.plot(cycle_lengths, p(cycle_lengths), '--', 
              color='red', alpha=0.5, linewidth=2, label='Linear trend')
     ax2.legend(loc='best', fontsize=11, framealpha=0.9)
     
-    # Panel 3: Emergent scales (КЛЮЧОВИЙ ГРАФІК)
+    # Panel 3: Emergent scales (KEY PLOT)
     ax3 = fig.add_subplot(gs[1, 0])
-    colors = ['#C73E1D', '#C73E1D', '#C73E1D']  # червоний
+    colors = ['#C73E1D', '#C73E1D', '#C73E1D']  # red
     ax3.bar(cycle_lengths, emergent_scales, width=0.6, color=colors, 
             edgecolor='black', linewidth=2, alpha=0.8)
     ax3.set_xlabel('Cycle Length', fontsize=13, fontweight='bold')
@@ -128,13 +128,13 @@ def create_final_visualization():
     ax3.set_ylim([0, 4])
     ax3.grid(True, alpha=0.3, axis='y')
     
-    # Додаємо мітки типу ієрархії
+    # Add hierarchy type labels
     hierarchy_types = ['Complex', 'Balloon', 'Balloon']
     for i, (length, scales, htype) in enumerate(zip(cycle_lengths, emergent_scales, hierarchy_types)):
         ax3.text(length, scales + 0.2, f'{scales}\n({htype})', 
                 ha='center', va='bottom', fontsize=11, fontweight='bold')
     
-    # Виділяємо critical transition
+    # Highlight critical transition
     ax3.axvline(x=3.5, color='red', linestyle='--', linewidth=2, alpha=0.6)
     ax3.text(3.5, 3.5, 'Critical\nTransition', ha='center', 
             fontsize=10, color='red', fontweight='bold',
@@ -189,22 +189,22 @@ def create_final_visualization():
             fontfamily='monospace',
             bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.3))
     
-    # Зберігаємо
+    # Save
     output_file = Path('figures/final_cycle_length_effect.png')
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
-    print(f"\n✓ Збережено: {output_file}")
+    print(f"\n✓ Saved: {output_file}")
     
     plt.close()
 
 def main():
     print("\n" + "="*70)
-    print("ФІНАЛЬНА ВІЗУАЛІЗАЦІЯ: Cycle Length Effect")
+    print("FINAL VISUALIZATION: Cycle Length Effect")
     print("="*70)
     
     create_final_visualization()
     
     print("\n" + "="*70)
-    print("ЗАВЕРШЕНО")
+    print("COMPLETED")
     print("="*70 + "\n")
 
 if __name__ == "__main__":

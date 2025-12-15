@@ -36,7 +36,7 @@ def plot_hierarchy_profile(results, output_path):
                   if any(d > 0 for d in dim_to_delta[dim]) else 0 
                   for dim in dims]
     
-    # Create symmetric plot (как в Figure 4)
+    # Create symmetric plot (as in Figure 4)
     fig, ax = plt.subplots(figsize=(8, 6))
     
     # Plot as filled area (symmetric)

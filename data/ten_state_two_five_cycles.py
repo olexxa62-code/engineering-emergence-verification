@@ -8,21 +8,21 @@ Developer: SubstanceNet
 #!/usr/bin/env python3
 """
 10-state system: Two independent 5-cycles
-Проміжна довжина між 3-cycle та 4-cycle
+Intermediate length between 3-cycle and 4-cycle
 """
 import numpy as np
 
 def create_two_five_cycle_tpm(p_self=0.2):
     """
-    Створює TPM для двох незалежних 5-циклів
+    Creates TPM for two independent 5-cycles
     
-    States 0-4: перший 5-цикл (0→1→2→3→4→0)
-    States 5-9: другий 5-цикл (5→6→7→8→9→5)
+    States 0-4: first 5-cycle (0→1→2→3→4→0)
+    States 5-9: second 5-cycle (5→6→7→8→9→5)
     
     Parameters:
     -----------
     p_self : float
-        Ймовірність залишитись у поточному стані
+        Probability of staying in current state
     
     Returns:
     --------
@@ -32,13 +32,13 @@ def create_two_five_cycle_tpm(p_self=0.2):
     n = 10
     tpm = np.zeros((n, n))
     
-    # Перший 5-цикл: states 0-4
+    # First 5-cycle: states 0-4
     for i in range(5):
         next_state = (i + 1) % 5
         tpm[i, i] = p_self           # stay
         tpm[i, next_state] = 1 - p_self  # transition
     
-    # Другий 5-цикл: states 5-9
+    # Second 5-cycle: states 5-9
     for i in range(5, 10):
         next_state = 5 + ((i - 5 + 1) % 5)
         tpm[i, i] = p_self           # stay
@@ -47,11 +47,11 @@ def create_two_five_cycle_tpm(p_self=0.2):
     return tpm
 
 def get_optimal_partition():
-    """Повертає оптимальну macroscale партицію"""
+    """Returns optimal macroscale partition"""
     return ((0, 1, 2, 3, 4), (5, 6, 7, 8, 9))
 
 def get_system_description():
-    """Опис системи"""
+    """System description"""
     return {
         'name': '10-state two 5-cycles',
         'n_states': 10,

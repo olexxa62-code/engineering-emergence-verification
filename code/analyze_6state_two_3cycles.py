@@ -7,8 +7,8 @@ Developer: SubstanceNet
 
 #!/usr/bin/env python3
 """
-ВИПРАВЛЕНИЙ Sensitivity Analysis для 6-state System
-З правильним виключенням microscale
+Corrected Sensitivity Analysis for 6-state System
+With correct microscale exclusion
 """
 import sys
 import numpy as np
@@ -23,11 +23,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'data'))
 from six_state_two_cycle import create_two_cycle_tpm
 
 def analyze_single_p_self(p_self):
-    """Аналізує 6-state систему для заданого p_self"""
-    # Створюємо TPM
+    """Analyzes 6-state system for given p_self"""
+    # Create TPM
     tpm = create_two_cycle_tpm(p_self=p_self)
     
-    # CP для microscale
+    # CP for microscale
     det_micro = calculate_determinism(tpm)
     deg_micro = calculate_degeneracy(tpm)
     cp_micro = calculate_cp(tpm)
@@ -41,10 +41,10 @@ def analyze_single_p_self(p_self):
     
     delta_cp = cp_macro - cp_micro
     
-    # Algorithm 1 з правильним виключенням microscale
+    # Algorithm 1 with correct microscale exclusion
     algo_results = run_algorithm1(tpm)
     
-    # ВИКЛЮЧАЄМО MICROSCALE!
+    # EXCLUDE MICROSCALE!
     microscale = tuple((i,) for i in range(6))
     emergent_corrected = [p for p in algo_results['emergent'] if p != microscale]
     n_emergent_corrected = len(emergent_corrected)
@@ -66,14 +66,14 @@ def analyze_single_p_self(p_self):
 def main():
     print("="*70)
     print("CORRECTED SENSITIVITY ANALYSIS: 6-state Two 3-Cycles")
-    print("З правильним виключенням microscale")
+    print("With correct microscale exclusion")
     print("="*70)
     
     p_self_values = np.arange(0.0, 0.55, 0.05)
     all_results = []
     
     for p_self in p_self_values:
-        print(f"\nАналізую p_self = {p_self:.2f}...")
+        print(f"\nAnalyzing p_self = {p_self:.2f}...")
         results = analyze_single_p_self(p_self)
         all_results.append(results)
         
@@ -83,13 +83,13 @@ def main():
         print(f"  Emergent: RAW={results['n_emergent_raw']}, "
               f"CORRECTED={results['n_emergent_corrected']}")
     
-    # Зберігаємо
+    # Save
     output_file = Path("results/sensitivity_analysis_6state_corrected.pkl")
     with open(output_file, 'wb') as f:
         pickle.dump(all_results, f)
     
     print(f"\n{'='*70}")
-    print(f"Збережено: {output_file}")
+    print(f"Saved: {output_file}")
     print(f"Total configurations: {len(all_results)}")
     print(f"{'='*70}\n")
     

@@ -8,8 +8,8 @@ Developer: SubstanceNet
 #!/usr/bin/env python3
 """
 Sensitivity Analysis: 8-state Two Length-4 Cycles
-Параметр: p_self (probability of staying in current state)
-Діапазон: [0.0, 0.5] з кроком 0.05
+Parameter: p_self (probability of staying in current state)
+Range: [0.0, 0.5] with step 0.05
 
 Reference: Engineering Emergence, Hoel & Jansma (2025), Figure 3(ii)
 """
@@ -20,7 +20,7 @@ import os
 from pathlib import Path
 import pickle
 
-# Додаємо шлях до модулів
+# Add path to modules
 sys.path.insert(0, str(Path(__file__).parent))
 
 from ce2_core import calculate_cp, calculate_determinism, calculate_degeneracy, coarse_grain_tpm
@@ -28,7 +28,7 @@ from algorithm1_brute_force import run_algorithm1
 
 def create_two_cycle_tpm(n_states=8, p_self=0.2):
     """
-    Створює TPM для системи з двома length-4 циклами.
+    Creates TPM for system with two length-4 cycles.
     
     Cycle 1: 0→1→2→3→0 (states {0,1,2,3})
     Cycle 2: 4→5→6→7→4 (states {4,5,6,7})
@@ -36,7 +36,7 @@ def create_two_cycle_tpm(n_states=8, p_self=0.2):
     Parameters:
     -----------
     n_states : int
-        Number of states (повинно бути 8)
+        Number of states (must be 8)
     p_self : float
         Probability of staying in current state
         
@@ -67,27 +67,27 @@ def create_two_cycle_tpm(n_states=8, p_self=0.2):
 
 def analyze_single_p_self(p_self, verbose=True):
     """
-    Аналізує систему для заданого p_self.
+    Analyzes system for given p_self.
     
     Returns:
     --------
     results : dict
-        Містить CP metrics та emergent hierarchy info
+        Contains CP metrics and emergent hierarchy info
     """
-    # Створюємо TPM
+    # Create TPM
     tpm = create_two_cycle_tpm(n_states=8, p_self=p_self)
     
-    # Обчислюємо CP для microscale
+    # Compute CP for microscale
     det_micro = calculate_determinism(tpm); deg_micro = calculate_degeneracy(tpm); cp_micro = calculate_cp(tpm)
     
-    # Coarse-grain до оптимального макромасштабу ((0,1,2,3), (4,5,6,7))
+    # Coarse-grain to optimal macroscale ((0,1,2,3), (4,5,6,7))
     optimal_partition = ((0,1,2,3), (4,5,6,7))
     tpm_macro = coarse_grain_tpm(tpm, optimal_partition)
     det_macro = calculate_determinism(tpm_macro); deg_macro = calculate_degeneracy(tpm_macro); cp_macro = calculate_cp(tpm_macro)
     
     delta_cp = cp_macro - cp_micro
     
-    # Запускаємо Algorithm 1 для повного аналізу
+    # Run Algorithm 1 for full analysis
     if verbose:
         print(f"\n{'='*60}")
         print(f"p_self = {p_self:.2f}")
@@ -95,7 +95,7 @@ def analyze_single_p_self(p_self, verbose=True):
     
     algo_results = run_algorithm1(tpm)
     
-    # Виключаємо microscale з emergent scales
+    # Exclude microscale from emergent scales
     microscale = tuple((i,) for i in range(8))
     emergent_corrected = [p for p in algo_results['emergent'] 
                          if p != microscale]
@@ -133,14 +133,14 @@ def analyze_single_p_self(p_self, verbose=True):
 
 def run_sensitivity_analysis():
     """
-    Запускає повний sensitivity analysis.
+    Runs full sensitivity analysis.
     """
     print("="*70)
     print("SENSITIVITY ANALYSIS: 8-state Two Length-4 Cycles")
     print("Parameter: p_self (probability of staying in current state)")
     print("="*70)
     
-    # Діапазон значень p_self
+    # Range of p_self values
     p_self_values = np.arange(0.0, 0.55, 0.05)
     
     all_results = []
@@ -149,14 +149,14 @@ def run_sensitivity_analysis():
         results = analyze_single_p_self(p_self, verbose=False)
         all_results.append(results)
         
-        # Короткий вивід
+        # Short output
         print(f"p_self={p_self:.2f} | "
               f"CP(micro)={results['cp_micro']:.4f} | "
               f"CP(macro)={results['cp_macro']:.4f} | "
               f"ΔCP={results['delta_cp']:.4f} | "
               f"Emergent={results['n_emergent_corrected']}")
     
-    # Зберігаємо результати
+    # Save results
     output_dir = Path(__file__).parent.parent / "results"
     output_dir.mkdir(exist_ok=True)
     
@@ -165,7 +165,7 @@ def run_sensitivity_analysis():
         pickle.dump(all_results, f)
     
     print(f"\n{'='*70}")
-    print(f"Результати збережено: {output_file}")
+    print(f"Results saved: {output_file}")
     print(f"Total configurations analyzed: {len(all_results)}")
     print(f"{'='*70}")
     
