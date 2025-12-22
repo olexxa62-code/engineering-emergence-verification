@@ -1,38 +1,35 @@
-# Python
+
+*~
+*$py.class
+archive/
+archive/hoel_verification_backup_*.tar.gz
+build/
+.cache/
+*.csv.backup
+dist/
+.DS_Store
+*.egg-info/
+env/
+# IDE
+.idea/
+*.ipynb
+.ipynb_checkpoints/
+# Jupyter Notebook
+my_env/
+# OS
+*.pkl.backup
+# Project specific
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
+# Python
 .Python
-env/
-venv/
-my_env/
-*.egg-info/
-dist/
-build/
-
-# Jupyter Notebook
-.ipynb_checkpoints/
-*.ipynb
-
-# IDE
-.vscode/
-.idea/
-*.swp
+research_notes/
+*.so
 *.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Project specific
-*.pkl.backup
-*.csv.backup
-archive/hoel_verification_backup_*.tar.gz
-
-# Temporary files
-*.tmp
+*.swp
 *.temp
-.cache/
-archive/
+# Temporary files
+Thumbs.db
+*.tmp
+venv/
+.vscode/
